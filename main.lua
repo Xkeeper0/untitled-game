@@ -11,6 +11,8 @@ Class		= require "hump.class"
 Timer		= require "hump.timer"
 Vector		= require "hump.vector"
 
+-- "Pixel perfect" library w/ some modifications
+PixelPerfect	= require "pixelperfect"
 
 -- Globals ---------------------------------------
 -- Timers since game start
@@ -18,13 +20,15 @@ globalTimer		= 0
 globalFrames	= 0
 -- Collection of used fonts (loaded in love.load)
 fonts			= {}
+-- Gamestates
+gamestates		= {}
 
 
 function love.load()
 	-- Load assets and other things here
 
 	-- Load font assets
-	fonts.big	= love.graphics.newFont(30)
+	fonts.big	= love.graphics.newFont(24)
 	fonts.main	= love.graphics.newFont(14)
 	fonts.small	= love.graphics.newFont(10)
 	fonts.debug	= love.graphics.newFont("assets/Pokemon GB.ttf", 8)
@@ -32,8 +36,32 @@ function love.load()
 	-- Set font to "main" font
 	love.graphics.setFont(fonts.main)
 
-	-- Register GameState callbacks here
-	-- GameState.registerEvents()
+	-- Set default graphics filter
+	love.graphics.setDefaultFilter("nearest", "nearest", 1)
+
+	-- Increase zoom factor
+	PixelPerfect:load(320, 224, 3)
+
+	-- Gamestates
+	gamestates.titlescreen	= require "gamestates.title"
+
+	-- Register Gamestate callbacks here
+	Gamestate.registerEvents()
+
+	-- Double-wrap the love.draw function.
+	-- Gamestate.registerEvents wraps it, but we want to wrap it too
+	-- There's no easy way to say "register ALL but this callback"
+	-- :(
+	local oldDraw = love.draw
+	love.draw = function(...)
+		drawWrapper(oldDraw, ...)
+	end
+
+
+	Gamestate.switch(gamestates.titlescreen)
+
+
+
 end
 
 
@@ -45,12 +73,28 @@ function love.update(dt)
 end
 
 
-function love.draw()
+function drawWrapper(wrappedDrawer, ...)
+
+	-- Start upscaling canvas code here
+	PixelPerfect:startCanvas()
+	PixelPerfect:solidBG()
+
+	-- -----------------------------------------------------------------------
+	-- Do game drawing stuff here !!!!
+	wrappedDrawer()
+	-- -----------------------------------------------------------------------
+
+	-- End upscaling canvas and draw it to screen
+	PixelPerfect:endCanvas()
+
+	-- Stuff below here is rendered directly on the game screen at 1x
+
 	-- Draw current runtime in corner
-	-- Later, maybe FPS or something
 	local currentFont	= love.graphics.getFont()
 	love.graphics.setFont(fonts.debug)
-	love.graphics.print(string.format("Runtime\n%7.2fs\n%7df", globalTimer, globalFrames), 10, 10)
+	love.graphics.print(string.format("%7.2fs\n%7df", globalTimer, globalFrames), 320 * 3 - 70, 5)
 	love.graphics.setFont(currentFont)
+
+
 
 end
