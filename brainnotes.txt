@@ -16,3 +16,15 @@ Levels:
 - Background objects can just be stored as part of the level and not externally shown
 
 
+Objects:
+- Inherited
+- Basic features:
+--- Current movement vector
+--- Current position
+--- :setMovement(vector); set movement vector directly
+--- :accel(vector); add this to the movement vector
+--- :goto(vector); warp directly to this position
+--- Maybe :warp(stage, vector)? to move to a new stage
+--- :draw(), to draw it
+--- :update, to update animations / vectors
+--- :hitbox(), to draw hitbox(es)

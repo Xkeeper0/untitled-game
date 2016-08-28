@@ -26,10 +26,20 @@ Block			= require "classes.block"
 -- Data ------------------------------------------
 require "assets.data.blocks"
 
+-- Objects ---------------------------------------
+Objects			= {}
+Objects.Basic	= require "classes.object"
+Objects.Player	= require "classes.objects.player"
+
+
 -- Globals ---------------------------------------
 -- Timers since game start
 globalTimer		= 0
 globalFrames	= 0
+
+-- Keys held down
+heldKeys		= {}
+
 -- Collection of used fonts (loaded in love.load)
 fonts			= {}
 -- Gamestates
@@ -127,6 +137,17 @@ function drawWrapper(wrappedDrawer, ...)
 	love.graphics.print(string.format("%4d fps\n%7.4fs\n%7.4fs", love.timer.getFPS(), love.timer.getAverageDelta(), love.timer.getDelta()), 320 * 3 - 70, 5)
 	love.graphics.setFont(currentFont)
 
+end
 
 
+-- Callbacks for key presses and releases
+-- May seem redundant with love.keyboard.isDown but
+-- that one doesn't show how *long* it's been down.
+-- Maybe not useful but vOv
+function love.keypressed(key, scanCode, isRepeat)
+	heldKeys[key]	= globalTimer
+end
+
+function love.keyreleased(key, scanCode)
+	heldKeys[key]	= nil
 end

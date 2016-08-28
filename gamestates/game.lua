@@ -6,6 +6,7 @@ thisState.stage	= nil
 -- Called on first-time entry into this state
 function thisState:init()
 	-- Game setup should start here
+	self.player	= Objects.Player(Vector(320 / 2, 224 / 2))
 end
 
 -- Called every time entering; ... can be specified by the previous state
@@ -44,6 +45,7 @@ end
 
 -- Same as love.update callback
 function thisState:update(dt)
+	self.player:update(dt)
 end
 
 -- Same as love.draw callback
@@ -56,6 +58,8 @@ function thisState:draw()
 			Block:drawBlock(x, y, self.stage.layout[y][x])
 		end
 	end
+
+	self.player:draw()
 end
 
 -- Called when key is pressed
