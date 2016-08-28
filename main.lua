@@ -40,6 +40,7 @@ function love.load()
 	love.graphics.setDefaultFilter("nearest", "nearest", 1)
 
 	-- Increase zoom factor
+	-- @todo: Store this in save file/config?
 	PixelPerfect:load(320, 224, 3)
 
 	-- Gamestates
@@ -65,7 +66,7 @@ function love.load()
 end
 
 
-
+-- Update function -- typically wrapped by hump.Gamestate
 function love.update(dt)
 	-- Track current game runtime
 	globalTimer		= globalTimer + dt
@@ -73,6 +74,8 @@ function love.update(dt)
 end
 
 
+-- Wrapper around hump.Gamestate's wrapper around love.draw
+-- This scales the game to 3X (or whatever)
 function drawWrapper(wrappedDrawer, ...)
 
 	-- Start upscaling canvas code here

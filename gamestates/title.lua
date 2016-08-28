@@ -1,4 +1,7 @@
--- Generic "game state" definer
+-- Title screen game state
+-- Handles showing the title screen,
+-- switching to the next screen on pushing button, etc
+
 
 local thisState	= {}
 
