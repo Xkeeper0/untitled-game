@@ -1,0 +1,18 @@
+Levels:
+
+- Should probably be stored a text file for easy reference
+- Loaded either all at once or upon first entry
+- Levels stored in an table of "layout", "current objects"?
+
+- Level has "remove object" when player leaves, as well as what object they had?
+- Otherwise stays "stable" as an table when not in use
+
+- Level =
+--- BLOCKS AND DATA
+--- CURRENT OBJECTS
+--- CURRENT "DECORATIONS"
+
+- Every "interactable" object is unique and stored differently
+- Background objects can just be stored as part of the level and not externally shown
+
+
