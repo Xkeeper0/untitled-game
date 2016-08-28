@@ -1,10 +1,5 @@
--- Title screen game state
--- Handles showing the title screen,
--- switching to the next screen on pushing button, etc
-
 
 local thisState	= {}
-
 
 
 -- Called on first-time entry into this state
@@ -41,20 +36,10 @@ end
 
 -- Same as love.draw callback
 function thisState:draw()
-	love.graphics.setFont(fonts.big)
-	love.graphics.printf("Untitled Ludum Dare 36 Game", 10, 20, 300, "center")
-	love.graphics.setFont(fonts.main)
-	love.graphics.printf("Enter to next part", 10, 100, 300, "center")
 end
 
 -- Called when key is pressed
 function thisState:keypressed(key)
-
-	if key == "return" then
-
-		Gamestate.switch(gamestates.game)
-	end
-
 end
 
 -- Called when key is released
