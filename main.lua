@@ -12,7 +12,10 @@ Timer		= require "hump.timer"
 Vector		= require "hump.vector"
 
 -- "Pixel perfect" library w/ some modifications
-PixelPerfect	= require "pixelperfect"
+PixelPerfect	= require "utils.pixelperfect"
+
+-- "Explode" string splitter
+explode			= require "utils.explode"
 
 -- Globals ---------------------------------------
 -- Timers since game start
