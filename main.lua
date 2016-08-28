@@ -20,8 +20,11 @@ PixelPerfect	= require "utils.pixelperfect"
 explode			= require "utils.explode"
 
 -- Game Helpers ----------------------------------
-
 StageHandler	= require "classes.stages"
+Block			= require "classes.block"
+
+-- Data ------------------------------------------
+require "assets.data.blocks"
 
 -- Globals ---------------------------------------
 -- Timers since game start
@@ -51,6 +54,9 @@ function love.load()
 
 	-- Set default graphics filter
 	love.graphics.setDefaultFilter("nearest", "nearest", 1)
+
+	-- Load block graphics
+	Block:prepareBlocks()
 
 	-- Increase zoom factor
 	-- @todo: Store this in save file/config?
@@ -102,6 +108,12 @@ function drawWrapper(wrappedDrawer, ...)
 	wrappedDrawer()
 	-- -----------------------------------------------------------------------
 
+	for x = 0, 19 do
+		for y = 0, 13 do
+			Block:drawBlock(x, y, (x + y) % 4)
+		end
+	end
+
 	-- End upscaling canvas and draw it to screen
 	PixelPerfect:endCanvas()
 
@@ -110,11 +122,9 @@ function drawWrapper(wrappedDrawer, ...)
 	-- Draw current runtime in corner
 	local currentFont	= love.graphics.getFont()
 	love.graphics.setFont(fonts.debug)
-	love.graphics.print(string.format("%7.2fs\n%7df", globalTimer, globalFrames), 320 * 3 - 70, 5)
+	love.graphics.print(string.format("%4d fps\n%7.4fs\n%7.4fs", love.timer.getFPS(), love.timer.getAverageDelta(), love.timer.getDelta()), 320 * 3 - 70, 5)
 	love.graphics.setFont(currentFont)
 
 
 
 end
-
-
