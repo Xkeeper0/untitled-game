@@ -12,7 +12,7 @@ Stages.objects	= {}
 function Stages:load(name)
 	-- Load level data from file
 	-- and replace \r\n (windows) with \n (everything else)
-	local data	= love.filesystem.read("stages/".. name ..".txt")
+	local data	= love.filesystem.read("assets/stages/".. name ..".txt")
 	data		= data:gsub("\r\n", "\n")
 
 	-- Split data file into 3 parts
