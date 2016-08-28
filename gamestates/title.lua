@@ -52,7 +52,7 @@ function thisState:keypressed(key)
 
 	if key == "return" then
 
-		Gamestate.switch(gamestates.game)
+		Gamestate.switch(gamestates.game, "room1")
 	end
 
 end

@@ -20,7 +20,7 @@ PixelPerfect	= require "utils.pixelperfect"
 explode			= require "utils.explode"
 
 -- Game Helpers ----------------------------------
-StageHandler	= require "classes.stages"
+StageHandler	= require "classes.stagehandler"
 Block			= require "classes.block"
 
 -- Data ------------------------------------------
@@ -108,12 +108,14 @@ function drawWrapper(wrappedDrawer, ...)
 	wrappedDrawer()
 	-- -----------------------------------------------------------------------
 
+	--[[
 	for x = 0, 19 do
 		for y = 0, 13 do
 			Block:drawBlock(x, y, (x + y) % 4)
 		end
 	end
-
+	--]]
+	
 	-- End upscaling canvas and draw it to screen
 	PixelPerfect:endCanvas()
 

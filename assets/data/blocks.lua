@@ -19,13 +19,3 @@ BlockTypes		= {
 	[2]	= { imageLocation = { tileset = "tileset", x = "0", y = "1" }, type = "ladder"},
 	[3]	= { imageLocation = { tileset = "tileset", x = "1", y = "1" }, type = "solid" }
 	}
-
-
--- Translate a character into a block type (id)
-function characterToBlock(char)
-	if BlockTranslationTable[char] then
-		return BlockTranslationTable[char]
-	else
-		error("Unknown leveldata block type: ".. char)
-	end
-end

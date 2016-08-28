@@ -1,18 +1,21 @@
 
 -- Stage decoder/storage/management class
-local Stages = {}
+local StageHandler = {}
 
 -- All loaded stages
-Stages.stages	= {}
+StageHandler.stages	= {}
 
 -- All "global" objects
-Stages.objects	= {}
+StageHandler.objects	= {}
 
 
-function Stages:load(name)
+function StageHandler:load(name)
 	-- Load level data from file
 	-- and replace \r\n (windows) with \n (everything else)
 	local data	= love.filesystem.read("assets/stages/".. name ..".txt")
+	if not data then
+		error("Failed to load stage assets/stages/".. name ..".txt")
+	end
 	data		= data:gsub("\r\n", "\n")
 
 	-- Split data file into 3 parts
@@ -34,9 +37,23 @@ function Stages:load(name)
 end
 
 
+-- Get a stage (or load it if it doesn't exist yet)
+function StageHandler:get(name)
+	print("StageHandler: fetching ".. name)
+	if self.stages[name] then
+		return self.stages[name]
+	end
+
+	-- Stage isn't loaded, load it now
+	self.stages[name]	= self:load(name)
+	return self.stages[name]
+end
+
+
+
 -- Parse a block of level data
 -- Expected to be 20 characters, 14 lines
-function Stages:parseLayoutData(data)
+function StageHandler:parseLayoutData(data)
 	local levelData	= {}
 
 	-- Explode into individual lines
@@ -59,7 +76,7 @@ function Stages:parseLayoutData(data)
 		-- Iterate every character, put into array
 		for i = 1, #dataArray[line] do
 			local c = dataArray[line]:sub(i,i)
-			levelData[line - 1][i - 1]	= c
+			levelData[line - 1][i - 1]	= Block:characterToBlock(c)
 		end
 
 
@@ -71,8 +88,8 @@ end
 
 
 
-function Stages:getCurrent()
+function StageHandler:getCurrent()
 end
 
 
-return Stages
+return StageHandler

@@ -29,4 +29,14 @@ function Block:createTileQuad(filename, x, y)
 end
 
 
+-- Translate a character into a block type (id)
+function Block:characterToBlock(char)
+	if BlockTranslationTable[char] then
+		return BlockTranslationTable[char]
+	else
+		error("Unknown leveldata block type: ".. char)
+	end
+end
+
+
 return Block
