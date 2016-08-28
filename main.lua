@@ -4,6 +4,8 @@
 -- ]] ------------------------------------------------------------------------
 
 
+-- Libraries -------------------------------------
+
 -- Import some things from the hump library
 -- http://hump.readthedocs.io/
 Gamestate	= require "hump.gamestate"
@@ -17,6 +19,10 @@ PixelPerfect	= require "utils.pixelperfect"
 -- "Explode" string splitter
 explode			= require "utils.explode"
 
+-- Game Helpers ----------------------------------
+
+StageHandler	= require "classes.stages"
+
 -- Globals ---------------------------------------
 -- Timers since game start
 globalTimer		= 0
@@ -25,6 +31,10 @@ globalFrames	= 0
 fonts			= {}
 -- Gamestates
 gamestates		= {}
+
+
+-- Global sandbox for crap
+junkbox			= {}
 
 
 function love.load()
@@ -48,6 +58,7 @@ function love.load()
 
 	-- Gamestates
 	gamestates.titlescreen	= require "gamestates.title"
+	gamestates.game			= require "gamestates.game"
 
 	-- Register Gamestate callbacks here
 	Gamestate.registerEvents()
@@ -65,6 +76,7 @@ function love.load()
 	Gamestate.switch(gamestates.titlescreen)
 
 
+	junkbox.st		= StageHandler:load("room1")
 
 end
 
@@ -104,3 +116,5 @@ function drawWrapper(wrappedDrawer, ...)
 
 
 end
+
+
