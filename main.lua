@@ -74,7 +74,8 @@ function love.load()
 
 	-- Gamestates
 	gamestates.titlescreen	= require "gamestates.title"
-	gamestates.game			= require "gamestates.game"
+	gamestates.world		= require "gamestates.world"
+	gamestates.stage		= require "gamestates.stage"
 
 	-- Register Gamestate callbacks here
 	Gamestate.registerEvents()
@@ -125,7 +126,7 @@ function drawWrapper(wrappedDrawer, ...)
 		end
 	end
 	--]]
-	
+
 	-- End upscaling canvas and draw it to screen
 	PixelPerfect:endCanvas()
 

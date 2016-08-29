@@ -1,26 +1,23 @@
 
 local thisState	= {}
 
-thisState.stage	= nil
-
 -- Called on first-time entry into this state
 function thisState:init()
 	-- Game setup should start here
-	self.player	= Objects.Player(Vector(320 / 2, 224 / 2))
+	self.players	= {
+		Objects.Player(Vector(320 / 2, 224 / 2)),
+		Objects.Player(Vector(320 / 2, 224 / 2)),
+		}
+	self.activePlayer	= 1
+
 end
 
 -- Called every time entering; ... can be specified by the previous state
 function thisState:enter(previous, ...)
-	local arg = {...}
-	-- First extra argument in this case should be the room name to move to
-	if true then
-		junkbox	= arg
+	if previous == gamestates.titlescreen then
+		-- Enter the "stage" gamestate
+		Gamestate.push(gamestates.stage, "room1")
 	end
-	if not arg[1] then
-		error("Missing room name to transfer into")
-	end
-
-	self.stage	= StageHandler:get(arg[1])
 end
 
 -- Called when leaving the state
@@ -45,21 +42,10 @@ end
 
 -- Same as love.update callback
 function thisState:update(dt)
-	self.player:update(dt)
 end
 
 -- Same as love.draw callback
 function thisState:draw()
-
-	love.graphics.print(self.stage.name, 1, 1)
-
-	for x = 0, 19 do
-		for y = 0, 13 do
-			Block:drawBlock(x, y, self.stage.layout[y][x])
-		end
-	end
-
-	self.player:draw()
 end
 
 -- Called when key is pressed
