@@ -1,18 +1,24 @@
--- Title screen game state
--- Handles showing the title screen,
--- switching to the next screen on pushing button, etc
-
 
 local thisState	= {}
 
-
+thisState.stage	= nil
 
 -- Called on first-time entry into this state
 function thisState:init()
+	-- Game setup should start here
+	self.player	= Objects.Player(Vector(320 / 2, 224 / 2))
 end
 
 -- Called every time entering; ... can be specified by the previous state
 function thisState:enter(previous, ...)
+	self.from	= previous
+	local arg = {...}
+
+	if not arg[1] then
+		error("Missing room name to transfer into")
+	end
+
+	self.stage	= StageHandler:get(arg[1])
 end
 
 -- Called when leaving the state
@@ -37,24 +43,28 @@ end
 
 -- Same as love.update callback
 function thisState:update(dt)
+	self.from.players[self.from.activePlayer]:update(dt)
+	--self.player:update(dt)
 end
 
 -- Same as love.draw callback
 function thisState:draw()
-	love.graphics.setFont(fonts.big)
-	love.graphics.printf("Untitled Ludum Dare 36 Game", 10, 20, 300, "center")
-	love.graphics.setFont(fonts.main)
-	love.graphics.printf("Enter to next part", 10, 100, 300, "center")
+
+	love.graphics.print(self.stage.name, 1, 1)
+
+	for x = 0, 19 do
+		for y = 0, 13 do
+			Block:drawBlock(x, y, self.stage.layout[y][x])
+		end
+	end
+
+	for i = 1, 2 do
+		self.from.players[i]:draw(dt)
+	end
 end
 
 -- Called when key is pressed
 function thisState:keypressed(key)
-
-	if key == "return" then
-
-		Gamestate.switch(gamestates.world)
-	end
-
 end
 
 -- Called when key is released
