@@ -1,4 +1,4 @@
-Ludum Dare 36 game
+untitled game
 =============================
 
 "Play" this by downloading Love2D: https://love2d.org/
@@ -10,3 +10,5 @@ drag the folder onto the `love2d` executable.
 
 There isn't much here yet. You can follow the attempt at making something
 on [our trello board](https://trello.com/b/XRPqAx4c/36)
+
+Ludum Dare 36's start inspired this project to begin.
