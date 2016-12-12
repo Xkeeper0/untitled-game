@@ -6,9 +6,6 @@ untitled game
 After downloading this repository,
 drag the folder onto the `love2d` executable.
 
-(Users of Linux/MacOS might be able to just run `love <folder>`)
-
-There isn't much here yet. You can follow the attempt at making something
-on [our trello board](https://trello.com/b/XRPqAx4c/36)
-
-Ludum Dare 36's start inspired this project to begin.
+If you are cloning the repository, be sure to run
+`git submodule init` and `git submodule update` to fetch
+the additional repositories this requires.
