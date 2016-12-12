@@ -3,7 +3,7 @@ function love.conf(t)
 	t.version               = "0.10.1"
 	t.console               = true
 
-	t.window.title          = "Ludum Dare 36"
+	t.window.title          = "Untitled Game"
 	t.window.icon           = nil
 	t.window.width          = 960
 	t.window.height         = 672
